@@ -8,10 +8,8 @@
 <!-- React + ReactDOM -->
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<!-- Babel standalone, lets us write JSX directly in the browser -->
-<script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
 <!-- Lucide icon data (vanilla build) — we wrap these as React icon components below -->
-<script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.js" crossorigin></script>
+<script src="https://unpkg.com/lucide@1.25.0/dist/umd/lucide.js" crossorigin></script>
 
 <style>
   html, body { margin: 0; padding: 0; background: #EAE5E2; }
@@ -23,8 +21,12 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel-source" id="app-source">
-const { useState, createContext, useContext } = React;
+<script>
+const {
+  useState,
+  createContext,
+  useContext
+} = React;
 
 // ============================================================
 // ICONS — thin React wrappers around Lucide's icon path data,
@@ -32,28 +34,37 @@ const { useState, createContext, useContext } = React;
 // that lucide-react components provide.
 // ============================================================
 function makeIcon(name) {
-  return function LucideIconWrapper({ size = 24, color = "currentColor", strokeWidth = 2, style = {}, opacity, ...rest }) {
-    const node = (window.lucide && window.lucide.icons && window.lucide.icons[name]) || [];
-    return React.createElement(
-      "svg",
-      {
-        xmlns: "http://www.w3.org/2000/svg",
-        width: size,
-        height: size,
-        viewBox: "0 0 24 24",
-        fill: "none",
-        stroke: color,
-        strokeWidth: strokeWidth,
-        strokeLinecap: "round",
-        strokeLinejoin: "round",
-        style: { opacity, flexShrink: 0, ...style },
-        ...rest,
+  return function LucideIconWrapper({
+    size = 24,
+    color = "currentColor",
+    strokeWidth = 2,
+    style = {},
+    opacity,
+    ...rest
+  }) {
+    const node = window.lucide && window.lucide.icons && window.lucide.icons[name] || [];
+    return React.createElement("svg", {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: size,
+      height: size,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: color,
+      strokeWidth: strokeWidth,
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+      style: {
+        opacity,
+        flexShrink: 0,
+        ...style
       },
-      node.map((n, i) => React.createElement(n[0], { key: i, ...n[1] }))
-    );
+      ...rest
+    }, node.map((n, i) => React.createElement(n[0], {
+      key: i,
+      ...n[1]
+    })));
   };
 }
-
 const Home = makeIcon("Home");
 const FileText = makeIcon("FileText");
 const Bell = makeIcon("Bell");
@@ -100,733 +111,2068 @@ const theme = {
   fontBody: "'Segoe UI', Roboto, Arial, sans-serif",
   radiusLg: 20,
   radiusMd: 14,
-  radiusSm: 10,
+  radiusSm: 10
 };
 const ThemeCtx = createContext(theme);
 const useTheme = () => useContext(ThemeCtx);
-
-function PhoneFrame({ children }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", padding: "24px 12px", background: "#EAE5E2", minHeight: "100%" }}>
-      <div style={{ width: 380, height: 800, borderRadius: 44, background: "#111", padding: 10, boxShadow: "0 30px 70px rgba(0,0,0,0.3)", position: "relative" }}>
-        <div style={{ width: "100%", height: "100%", borderRadius: 34, background: theme.bg, overflow: "hidden", position: "relative", display: "flex", flexDirection: "column" }}>
-          <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 130, height: 24, background: "#111", borderRadius: "0 0 16px 16px", zIndex: 50 }} />
-          {children}
-        </div>
-      </div>
-    </div>
-  );
+function PhoneFrame({
+  children
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      padding: "24px 12px",
+      background: "#EAE5E2",
+      minHeight: "100%"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 380,
+      height: 800,
+      borderRadius: 44,
+      background: "#111",
+      padding: 10,
+      boxShadow: "0 30px 70px rgba(0,0,0,0.3)",
+      position: "relative"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 34,
+      background: theme.bg,
+      overflow: "hidden",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      top: 0,
+      left: "50%",
+      transform: "translateX(-50%)",
+      width: 130,
+      height: 24,
+      background: "#111",
+      borderRadius: "0 0 16px 16px",
+      zIndex: 50
+    }
+  }), children)));
 }
-
 function StatusBar() {
   const t = useTheme();
-  return (
-    <div style={{ height: 34, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px", fontSize: 12, fontWeight: 600, color: t.ink, flexShrink: 0 }}>
-      <span>9:41</span>
-      <span style={{ letterSpacing: 1, color: t.textSecondary }}>●●●● 5G 100%</span>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 34,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: "0 24px",
+      fontSize: 12,
+      fontWeight: 600,
+      color: t.ink,
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "9:41"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      letterSpacing: 1,
+      color: t.textSecondary
+    }
+  }, "●●●● 5G 100%"));
 }
-
-function Logo({ size = 15, on = "light" }) {
+function Logo({
+  size = 15,
+  on = "light"
+}) {
   const t = useTheme();
   const fg = on === "light" ? t.ink : "#fff";
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-      <div style={{ width: size + 10, height: size + 10, borderRadius: 8, background: t.primary, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-        <ShieldCheck size={size} color="#fff" strokeWidth={2.3} />
-      </div>
-      <div style={{ lineHeight: 1.05 }}>
-        <div style={{ fontFamily: t.fontDisplay, fontWeight: 700, fontSize: size, color: fg }}>RideGuard</div>
-        <div style={{ fontSize: 8.5, color: t.textMuted, letterSpacing: 0.6, textTransform: "uppercase" }}>by IndusInd Insurance</div>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 6
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: size + 10,
+      height: size + 10,
+      borderRadius: 8,
+      background: t.primary,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement(ShieldCheck, {
+    size: size,
+    color: "#fff",
+    strokeWidth: 2.3
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      lineHeight: 1.05
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: t.fontDisplay,
+      fontWeight: 700,
+      fontSize: size,
+      color: fg
+    }
+  }, "RideGuard"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 8.5,
+      color: t.textMuted,
+      letterSpacing: 0.6,
+      textTransform: "uppercase"
+    }
+  }, "by IndusInd Insurance")));
 }
-
-function TopBar({ title, eyebrow, onBack, plain }) {
+function TopBar({
+  title,
+  eyebrow,
+  onBack,
+  plain
+}) {
   const t = useTheme();
   if (plain) {
-    return (
-      <div style={{ padding: "10px 18px 4px", display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
-        <Logo />
-        <button style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 10, width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-          <Bell size={16} color={t.ink} />
-        </button>
-      </div>
-    );
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: "10px 18px 4px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexShrink: 0
+      }
+    }, /*#__PURE__*/React.createElement(Logo, null), /*#__PURE__*/React.createElement("button", {
+      style: {
+        background: t.card,
+        border: `1px solid ${t.border}`,
+        borderRadius: 10,
+        width: 34,
+        height: 34,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer"
+      }
+    }, /*#__PURE__*/React.createElement(Bell, {
+      size: 16,
+      color: t.ink
+    })));
   }
-  return (
-    <div style={{ padding: "8px 18px 14px", flexShrink: 0 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: title ? 14 : 0 }}>
-        {onBack && (
-          <button onClick={onBack} style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 10, width: 32, height: 32, padding: 0, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <ChevronLeft size={18} color={t.ink} />
-          </button>
-        )}
-        <Logo size={13} />
-      </div>
-      {title && (
-        <div>
-          {eyebrow && <div style={{ fontSize: 10.5, fontWeight: 700, color: t.primary, textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>{eyebrow}</div>}
-          <div style={{ fontFamily: t.fontDisplay, fontWeight: 700, fontSize: 22, color: t.ink }}>{title}</div>
-        </div>
-      )}
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: "8px 18px 14px",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      marginBottom: title ? 14 : 0
+    }
+  }, onBack && /*#__PURE__*/React.createElement("button", {
+    onClick: onBack,
+    style: {
+      background: t.card,
+      border: `1px solid ${t.border}`,
+      borderRadius: 10,
+      width: 32,
+      height: 32,
+      padding: 0,
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement(ChevronLeft, {
+    size: 18,
+    color: t.ink
+  })), /*#__PURE__*/React.createElement(Logo, {
+    size: 13
+  })), title && /*#__PURE__*/React.createElement("div", null, eyebrow && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 10.5,
+      fontWeight: 700,
+      color: t.primary,
+      textTransform: "uppercase",
+      letterSpacing: 1,
+      marginBottom: 4
+    }
+  }, eyebrow), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: t.fontDisplay,
+      fontWeight: 700,
+      fontSize: 22,
+      color: t.ink
+    }
+  }, title)));
 }
-
-function BottomNav({ active, go }) {
+function BottomNav({
+  active,
+  go
+}) {
   const t = useTheme();
-  const items = [
-    { id: "home", icon: Home, label: "Home" },
-    { id: "claims", icon: FileText, label: "Claims" },
-    { id: "locator", icon: MapPin, label: "Locator" },
-    { id: "vault", icon: FolderLock, label: "E-Doc" },
-    { id: "profile", icon: User, label: "Profile" },
-  ];
-  return (
-    <div style={{ display: "flex", background: t.card, borderTop: `1px solid ${t.border}`, flexShrink: 0, paddingBottom: 8, paddingTop: 6 }}>
-      {items.map((it) => {
-        const isActive = active === it.id;
-        return (
-          <button key={it.id} onClick={() => go(it.id)} style={{ flex: 1, background: "none", border: "none", padding: "6px 0 2px", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
-            <it.icon size={18} color={isActive ? t.primary : t.textMuted} strokeWidth={isActive ? 2.4 : 2} />
-            <span style={{ fontSize: 9, color: isActive ? t.primary : t.textMuted, fontWeight: isActive ? 700 : 500 }}>{it.label}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
+  const items = [{
+    id: "home",
+    icon: Home,
+    label: "Home"
+  }, {
+    id: "claims",
+    icon: FileText,
+    label: "Claims"
+  }, {
+    id: "locator",
+    icon: MapPin,
+    label: "Locator"
+  }, {
+    id: "vault",
+    icon: FolderLock,
+    label: "E-Doc"
+  }, {
+    id: "profile",
+    icon: User,
+    label: "Profile"
+  }];
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      background: t.card,
+      borderTop: `1px solid ${t.border}`,
+      flexShrink: 0,
+      paddingBottom: 8,
+      paddingTop: 6
+    }
+  }, items.map(it => {
+    const isActive = active === it.id;
+    return /*#__PURE__*/React.createElement("button", {
+      key: it.id,
+      onClick: () => go(it.id),
+      style: {
+        flex: 1,
+        background: "none",
+        border: "none",
+        padding: "6px 0 2px",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 3
+      }
+    }, /*#__PURE__*/React.createElement(it.icon, {
+      size: 18,
+      color: isActive ? t.primary : t.textMuted,
+      strokeWidth: isActive ? 2.4 : 2
+    }), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 9,
+        color: isActive ? t.primary : t.textMuted,
+        fontWeight: isActive ? 700 : 500
+      }
+    }, it.label));
+  }));
 }
-
-function Pill({ children, tone = "primary" }) {
+function Pill({
+  children,
+  tone = "primary"
+}) {
   const t = useTheme();
   const map = {
-    primary: { bg: t.primaryTint, col: t.primaryDark },
-    gold: { bg: t.goldTint, col: "#8a6a1a" },
-    success: { bg: t.successTint, col: t.success },
-    danger: { bg: t.dangerTint, col: t.danger },
-    neutral: { bg: t.border, col: t.textSecondary },
+    primary: {
+      bg: t.primaryTint,
+      col: t.primaryDark
+    },
+    gold: {
+      bg: t.goldTint,
+      col: "#8a6a1a"
+    },
+    success: {
+      bg: t.successTint,
+      col: t.success
+    },
+    danger: {
+      bg: t.dangerTint,
+      col: t.danger
+    },
+    neutral: {
+      bg: t.border,
+      col: t.textSecondary
+    }
   };
   const c = map[tone] || map.primary;
-  return (
-    <span style={{ background: c.bg, color: c.col, fontSize: 10.5, fontWeight: 700, padding: "4px 10px", borderRadius: 20, display: "inline-block" }}>
-      {children}
-    </span>
-  );
+  return /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: c.bg,
+      color: c.col,
+      fontSize: 10.5,
+      fontWeight: 700,
+      padding: "4px 10px",
+      borderRadius: 20,
+      display: "inline-block"
+    }
+  }, children);
 }
-
-function Card({ children, style = {}, onClick, highlight }) {
+function Card({
+  children,
+  style = {},
+  onClick,
+  highlight
+}) {
   const t = useTheme();
-  return (
-    <div onClick={onClick} style={{
-      background: t.card, borderRadius: t.radiusMd, padding: 16,
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClick,
+    style: {
+      background: t.card,
+      borderRadius: t.radiusMd,
+      padding: 16,
       border: highlight ? `1.5px solid ${t.primary}` : `1px solid ${t.border}`,
       boxShadow: "0 1px 3px rgba(0,0,0,0.03)",
-      cursor: onClick ? "pointer" : "default", ...style
-    }}>
-      {children}
-    </div>
-  );
+      cursor: onClick ? "pointer" : "default",
+      ...style
+    }
+  }, children);
 }
-
-function PrimaryButton({ children, onClick, style = {} }) {
+function PrimaryButton({
+  children,
+  onClick,
+  style = {}
+}) {
   const t = useTheme();
-  return (
-    <button onClick={onClick} style={{
-      width: "100%", background: t.primary, color: "#fff", border: "none", borderRadius: t.radiusSm,
-      padding: "14px 0", fontSize: 14.5, fontWeight: 700, cursor: "pointer",
-      display: "flex", alignItems: "center", justifyContent: "center", gap: 6, ...style
-    }}>
-      {children}
-    </button>
-  );
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: onClick,
+    style: {
+      width: "100%",
+      background: t.primary,
+      color: "#fff",
+      border: "none",
+      borderRadius: t.radiusSm,
+      padding: "14px 0",
+      fontSize: 14.5,
+      fontWeight: 700,
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 6,
+      ...style
+    }
+  }, children);
 }
-
-function SecondaryButton({ children, onClick, style = {} }) {
+function SecondaryButton({
+  children,
+  onClick,
+  style = {}
+}) {
   const t = useTheme();
-  return (
-    <button onClick={onClick} style={{
-      width: "100%", background: "#fff", color: t.primary, border: `1.5px solid ${t.primary}`, borderRadius: t.radiusSm,
-      padding: "12.5px 0", fontSize: 13.5, fontWeight: 700, cursor: "pointer", ...style
-    }}>
-      {children}
-    </button>
-  );
+  return /*#__PURE__*/React.createElement("button", {
+    onClick: onClick,
+    style: {
+      width: "100%",
+      background: "#fff",
+      color: t.primary,
+      border: `1.5px solid ${t.primary}`,
+      borderRadius: t.radiusSm,
+      padding: "12.5px 0",
+      fontSize: 13.5,
+      fontWeight: 700,
+      cursor: "pointer",
+      ...style
+    }
+  }, children);
 }
-
-function Row({ label, value, muted }) {
+function Row({
+  label,
+  value,
+  muted
+}) {
   const t = useTheme();
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "6.5px 0" }}>
-      <span style={{ fontSize: 12.5, color: t.textSecondary }}>{label}</span>
-      <span style={{ fontSize: 13.5, fontWeight: 700, color: muted ? t.textMuted : t.ink, textDecoration: muted ? "line-through" : "none" }}>{value}</span>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "6.5px 0"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12.5,
+      color: t.textSecondary
+    }
+  }, label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13.5,
+      fontWeight: 700,
+      color: muted ? t.textMuted : t.ink,
+      textDecoration: muted ? "line-through" : "none"
+    }
+  }, value));
 }
-
-function ScreenWrap({ title, eyebrow, onBack, children }) {
-  return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-      <TopBar title={title} eyebrow={eyebrow} onBack={onBack} />
-      <div style={{ flex: 1, overflowY: "auto", padding: "0 18px 22px" }}>{children}</div>
-    </div>
-  );
+function ScreenWrap({
+  title,
+  eyebrow,
+  onBack,
+  children
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement(TopBar, {
+    title: title,
+    eyebrow: eyebrow,
+    onBack: onBack
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: "auto",
+      padding: "0 18px 22px"
+    }
+  }, children));
 }
-
 function Divider() {
   const t = useTheme();
-  return <div style={{ height: 1, background: t.border, margin: "10px 0" }} />;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 1,
+      background: t.border,
+      margin: "10px 0"
+    }
+  });
 }
-
-function HomeScreen({ go }) {
+function HomeScreen({
+  go
+}) {
   const t = useTheme();
-  return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-      <TopBar plain />
-      <div style={{ flex: 1, overflowY: "auto", padding: "6px 18px 20px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-          <div>
-            <div style={{ fontSize: 11.5, color: t.textMuted }}>Good afternoon</div>
-            <div style={{ fontSize: 19, fontWeight: 700, color: t.ink, fontFamily: t.fontDisplay }}>Deb Roy</div>
-          </div>
-          <div style={{ width: 40, height: 40, borderRadius: 20, background: t.gold, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "#fff", fontSize: 14 }}>DR</div>
-        </div>
-
-        <div style={{ background: `linear-gradient(135deg, ${t.primary} 0%, ${t.primaryDark} 100%)`, borderRadius: t.radiusLg, padding: 18, marginBottom: 14, position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", right: -30, top: -30, width: 120, height: 120, borderRadius: "50%", background: "rgba(255,255,255,0.07)" }} />
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <div>
-              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.75)", textTransform: "uppercase", letterSpacing: 1 }}>Active Policy</div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: "#fff", fontFamily: t.fontDisplay, marginTop: 2 }}>Honda Activa 6G</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)" }}>WB 24 AB 4521</div>
-            </div>
-            <Bike size={24} color="#fff" opacity={0.85} />
-          </div>
-          <Divider />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <div><div style={{ fontSize: 9.5, color: "rgba(255,255,255,0.65)" }}>RENEWS IN</div><div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>10 months</div></div>
-            <div><div style={{ fontSize: 9.5, color: "rgba(255,255,255,0.65)" }}>COVERAGE</div><div style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>Comprehensive</div></div>
-            <div><div style={{ fontSize: 9.5, color: "rgba(255,255,255,0.65)" }}>NCB</div><div style={{ fontSize: 14, fontWeight: 700, color: t.gold }}>20%</div></div>
-          </div>
-        </div>
-
-        <Card onClick={() => go("instant-issuance")} style={{ marginBottom: 10, display: "flex", gap: 12, alignItems: "center" }} highlight>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: t.primaryTint, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <Shield size={18} color={t.primary} />
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>New loan? Get instant coverage</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>Preview the disbursal-stage flow</div>
-          </div>
-          <ChevronRight size={16} color={t.textMuted} />
-        </Card>
-
-        <Card onClick={() => go("e20")} style={{ marginBottom: 16, display: "flex", gap: 12, alignItems: "flex-start" }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: t.goldTint, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <AlertTriangle size={18} color={t.gold} />
-          </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Your bike may not be E20-rated</div>
-            <div style={{ fontSize: 11.5, color: t.textMuted, marginTop: 2 }}>Ethanol-blended fuel can damage older engines</div>
-          </div>
-          <ChevronRight size={16} color={t.textMuted} />
-        </Card>
-
-        <div style={{ fontSize: 12, fontWeight: 700, color: t.ink, margin: "4px 0 10px" }}>Quick Actions</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
-          {[
-            { id: "claim-start", icon: Camera, label: "File a Claim" },
-            { id: "tripshield", icon: Zap, label: "TripShield" },
-            { id: "renewal", icon: Calendar, label: "Renew Policy" },
-            { id: "locator", icon: MapPin, label: "Quick Locator" },
-          ].map((a) => (
-            <Card key={a.id} onClick={() => go(a.id)} style={{ textAlign: "center", padding: "16px 6px" }}>
-              <a.icon size={20} color={t.primary} style={{ margin: "0 auto 8px" }} />
-              <div style={{ fontSize: 12, fontWeight: 700, color: t.ink }}>{a.label}</div>
-            </Card>
-          ))}
-        </div>
-
-        <Card onClick={() => go("rewards")} style={{ marginBottom: 16, display: "flex", gap: 12, alignItems: "center", background: t.goldTint, border: "none" }}>
-          <Award size={22} color={t.gold} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Safe Rider Rewards</div>
-            <div style={{ fontSize: 11, color: "#8a6a1a" }}>420 points · Redeem for premium discounts</div>
-          </div>
-          <ChevronRight size={16} color="#8a6a1a" />
-        </Card>
-
-        <div style={{ fontSize: 12, fontWeight: 700, color: t.ink, margin: "4px 0 10px" }}>Recent Activity</div>
-        <Card style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <CheckCircle2 size={18} color={t.success} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 12.5, fontWeight: 600, color: t.ink }}>Policy issued at loan disbursal</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>2 weeks ago</div>
-          </div>
-        </Card>
-      </div>
-    </div>
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement(TopBar, {
+    plain: true
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1,
+      overflowY: "auto",
+      padding: "6px 18px 20px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: t.textMuted
+    }
+  }, "Good afternoon"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 19,
+      fontWeight: 700,
+      color: t.ink,
+      fontFamily: t.fontDisplay
+    }
+  }, "Deb Roy")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      background: t.gold,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: 700,
+      color: "#fff",
+      fontSize: 14
+    }
+  }, "DR")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: `linear-gradient(135deg, ${t.primary} 0%, ${t.primaryDark} 100%)`,
+      borderRadius: t.radiusLg,
+      padding: 18,
+      marginBottom: 14,
+      position: "relative",
+      overflow: "hidden"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: "absolute",
+      right: -30,
+      top: -30,
+      width: 120,
+      height: 120,
+      borderRadius: "50%",
+      background: "rgba(255,255,255,0.07)"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 10.5,
+      color: "rgba(255,255,255,0.75)",
+      textTransform: "uppercase",
+      letterSpacing: 1
+    }
+  }, "Active Policy"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 17,
+      fontWeight: 700,
+      color: "#fff",
+      fontFamily: t.fontDisplay,
+      marginTop: 2
+    }
+  }, "Honda Activa 6G"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: "rgba(255,255,255,0.7)"
+    }
+  }, "WB 24 AB 4521")), /*#__PURE__*/React.createElement(Bike, {
+    size: 24,
+    color: "#fff",
+    opacity: 0.85
+  })), /*#__PURE__*/React.createElement(Divider, null), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 9.5,
+      color: "rgba(255,255,255,0.65)"
+    }
+  }, "RENEWS IN"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      fontWeight: 700,
+      color: "#fff"
+    }
+  }, "10 months")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 9.5,
+      color: "rgba(255,255,255,0.65)"
+    }
+  }, "COVERAGE"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      fontWeight: 700,
+      color: "#fff"
+    }
+  }, "Comprehensive")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 9.5,
+      color: "rgba(255,255,255,0.65)"
+    }
+  }, "NCB"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      fontWeight: 700,
+      color: t.gold
+    }
+  }, "20%")))), /*#__PURE__*/React.createElement(Card, {
+    onClick: () => go("instant-issuance"),
+    style: {
+      marginBottom: 10,
+      display: "flex",
+      gap: 12,
+      alignItems: "center"
+    },
+    highlight: true
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 38,
+      height: 38,
+      borderRadius: 10,
+      background: t.primaryTint,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement(Shield, {
+    size: 18,
+    color: t.primary
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, "New loan? Get instant coverage"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.textMuted
+    }
+  }, "Preview the disbursal-stage flow")), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 16,
+    color: t.textMuted
+  })), /*#__PURE__*/React.createElement(Card, {
+    onClick: () => go("e20"),
+    style: {
+      marginBottom: 16,
+      display: "flex",
+      gap: 12,
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 38,
+      height: 38,
+      borderRadius: 10,
+      background: t.goldTint,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement(AlertTriangle, {
+    size: 18,
+    color: t.gold
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, "Your bike may not be E20-rated"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: t.textMuted,
+      marginTop: 2
+    }
+  }, "Ethanol-blended fuel can damage older engines")), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 16,
+    color: t.textMuted
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      color: t.ink,
+      margin: "4px 0 10px"
+    }
+  }, "Quick Actions"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: 10,
+      marginBottom: 16
+    }
+  }, [{
+    id: "claim-start",
+    icon: Camera,
+    label: "File a Claim"
+  }, {
+    id: "tripshield",
+    icon: Zap,
+    label: "TripShield"
+  }, {
+    id: "renewal",
+    icon: Calendar,
+    label: "Renew Policy"
+  }, {
+    id: "locator",
+    icon: MapPin,
+    label: "Quick Locator"
+  }].map(a => /*#__PURE__*/React.createElement(Card, {
+    key: a.id,
+    onClick: () => go(a.id),
+    style: {
+      textAlign: "center",
+      padding: "16px 6px"
+    }
+  }, /*#__PURE__*/React.createElement(a.icon, {
+    size: 20,
+    color: t.primary,
+    style: {
+      margin: "0 auto 8px"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, a.label)))), /*#__PURE__*/React.createElement(Card, {
+    onClick: () => go("rewards"),
+    style: {
+      marginBottom: 16,
+      display: "flex",
+      gap: 12,
+      alignItems: "center",
+      background: t.goldTint,
+      border: "none"
+    }
+  }, /*#__PURE__*/React.createElement(Award, {
+    size: 22,
+    color: t.gold
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, "Safe Rider Rewards"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: "#8a6a1a"
+    }
+  }, "420 points · Redeem for premium discounts")), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 16,
+    color: "#8a6a1a"
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      color: t.ink,
+      margin: "4px 0 10px"
+    }
+  }, "Recent Activity"), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement(CheckCircle2, {
+    size: 18,
+    color: t.success
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 600,
+      color: t.ink
+    }
+  }, "Policy issued at loan disbursal"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.textMuted
+    }
+  }, "2 weeks ago")))));
 }
-
-function InstantIssuanceScreen({ go, step, setStep }) {
+function InstantIssuanceScreen({
+  go,
+  step,
+  setStep
+}) {
   const t = useTheme();
   if (step === "offer") {
-    return (
-      <ScreenWrap eyebrow="Loan Approved" title="Protect your new ride" onBack={() => go("home")}>
-        <div style={{ textAlign: "center", padding: "8px 0 18px" }}>
-          <div style={{ width: 60, height: 60, borderRadius: 16, background: t.primaryTint, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
-            <Shield size={28} color={t.primary} />
-          </div>
-          <div style={{ fontSize: 12.5, color: t.textSecondary, padding: "0 10px" }}>Get insurance for your Activa 6G in 30 seconds — pre-filled from your loan.</div>
-        </div>
-        <Card style={{ marginBottom: 16 }}>
-          <Row label="Vehicle" value="Honda Activa 6G" />
-          <Row label="Loan tenure" value="36 months" />
-          <Row label="On-road value" value="₹82,400" />
-        </Card>
-        <PrimaryButton onClick={() => setStep("plans")}>Continue <ChevronRight size={16} /></PrimaryButton>
-        <SecondaryButton onClick={() => go("home")} style={{ marginTop: 10 }}>Skip for now</SecondaryButton>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "Loan Approved",
+      title: "Protect your new ride",
+      onBack: () => go("home")
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        textAlign: "center",
+        padding: "8px 0 18px"
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: 60,
+        height: 60,
+        borderRadius: 16,
+        background: t.primaryTint,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "0 auto 12px"
+      }
+    }, /*#__PURE__*/React.createElement(Shield, {
+      size: 28,
+      color: t.primary
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        color: t.textSecondary,
+        padding: "0 10px"
+      }
+    }, "Get insurance for your Activa 6G in 30 seconds — pre-filled from your loan.")), /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 16
+      }
+    }, /*#__PURE__*/React.createElement(Row, {
+      label: "Vehicle",
+      value: "Honda Activa 6G"
+    }), /*#__PURE__*/React.createElement(Row, {
+      label: "Loan tenure",
+      value: "36 months"
+    }), /*#__PURE__*/React.createElement(Row, {
+      label: "On-road value",
+      value: "₹82,400"
+    })), /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: () => setStep("plans")
+    }, "Continue ", /*#__PURE__*/React.createElement(ChevronRight, {
+      size: 16
+    })), /*#__PURE__*/React.createElement(SecondaryButton, {
+      onClick: () => go("home"),
+      style: {
+        marginTop: 10
+      }
+    }, "Skip for now"));
   }
   if (step === "plans") {
-    return (
-      <ScreenWrap eyebrow="Step 2 of 3" title="Choose your plan" onBack={() => setStep("offer")}>
-        <div style={{ fontSize: 12, color: t.textMuted, marginBottom: 12 }}>Explained in plain language — no jargon.</div>
-        {[
-          { name: "Third-Party Only", price: "₹482/yr", desc: "Legally required minimum. Covers damage you cause to others.", tag: null },
-          { name: "Comprehensive", price: "₹1,340/yr", desc: "Covers your bike too — theft, accident, fire, natural events.", tag: "Popular" },
-          { name: "Comprehensive + E20", price: "₹1,520/yr", desc: "Adds protection against ethanol-fuel engine damage.", tag: "Best Fit" },
-        ].map((p, i) => (
-          <Card key={i} style={{ marginBottom: 10 }} highlight={!!p.tag}>
-            {p.tag && <Pill tone={p.tag === "Best Fit" ? "primary" : "gold"}>{p.tag}</Pill>}
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: p.tag ? 8 : 0 }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: t.ink }}>{p.name}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: t.primary }}>{p.price}</div>
-            </div>
-            <div style={{ fontSize: 11.5, color: t.textMuted, marginTop: 4 }}>{p.desc}</div>
-          </Card>
-        ))}
-        <PrimaryButton onClick={() => setStep("payment")} style={{ marginTop: 6 }}>Select Comprehensive + E20 <ChevronRight size={16} /></PrimaryButton>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "Step 2 of 3",
+      title: "Choose your plan",
+      onBack: () => setStep("offer")
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: t.textMuted,
+        marginBottom: 12
+      }
+    }, "Explained in plain language — no jargon."), [{
+      name: "Third-Party Only",
+      price: "₹482/yr",
+      desc: "Legally required minimum. Covers damage you cause to others.",
+      tag: null
+    }, {
+      name: "Comprehensive",
+      price: "₹1,340/yr",
+      desc: "Covers your bike too — theft, accident, fire, natural events.",
+      tag: "Popular"
+    }, {
+      name: "Comprehensive + E20",
+      price: "₹1,520/yr",
+      desc: "Adds protection against ethanol-fuel engine damage.",
+      tag: "Best Fit"
+    }].map((p, i) => /*#__PURE__*/React.createElement(Card, {
+      key: i,
+      style: {
+        marginBottom: 10
+      },
+      highlight: !!p.tag
+    }, p.tag && /*#__PURE__*/React.createElement(Pill, {
+      tone: p.tag === "Best Fit" ? "primary" : "gold"
+    }, p.tag), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        marginTop: p.tag ? 8 : 0
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, p.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 14,
+        fontWeight: 700,
+        color: t.primary
+      }
+    }, p.price)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11.5,
+        color: t.textMuted,
+        marginTop: 4
+      }
+    }, p.desc))), /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: () => setStep("payment"),
+      style: {
+        marginTop: 6
+      }
+    }, "Select Comprehensive + E20 ", /*#__PURE__*/React.createElement(ChevronRight, {
+      size: 16
+    })));
   }
   if (step === "payment") {
-    return (
-      <ScreenWrap eyebrow="Step 3 of 3" title="Payment" onBack={() => setStep("plans")}>
-        <Card style={{ marginBottom: 14 }}>
-          <Row label="Plan" value="Comprehensive + E20" />
-          <Row label="Annual premium" value="₹1,520" />
-        </Card>
-        <div style={{ fontSize: 12.5, fontWeight: 700, color: t.ink, marginBottom: 8 }}>How would you like to pay?</div>
-        <Card style={{ marginBottom: 10, display: "flex", alignItems: "center", gap: 10 }} highlight>
-          <Wallet size={20} color={t.primary} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Bundle into EMI</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>+₹127/month added to your loan EMI</div>
-          </div>
-        </Card>
-        <Card style={{ marginBottom: 18, display: "flex", alignItems: "center", gap: 10 }}>
-          <Wallet size={20} color={t.textMuted} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Pay upfront</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>₹1,520 one-time</div>
-          </div>
-        </Card>
-        <PrimaryButton onClick={() => setStep("done")}>Confirm & Pay</PrimaryButton>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "Step 3 of 3",
+      title: "Payment",
+      onBack: () => setStep("plans")
+    }, /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 14
+      }
+    }, /*#__PURE__*/React.createElement(Row, {
+      label: "Plan",
+      value: "Comprehensive + E20"
+    }), /*#__PURE__*/React.createElement(Row, {
+      label: "Annual premium",
+      value: "₹1,520"
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        fontWeight: 700,
+        color: t.ink,
+        marginBottom: 8
+      }
+    }, "How would you like to pay?"), /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 10,
+        display: "flex",
+        alignItems: "center",
+        gap: 10
+      },
+      highlight: true
+    }, /*#__PURE__*/React.createElement(Wallet, {
+      size: 20,
+      color: t.primary
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, "Bundle into EMI"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: t.textMuted
+      }
+    }, "+₹127/month added to your loan EMI"))), /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 18,
+        display: "flex",
+        alignItems: "center",
+        gap: 10
+      }
+    }, /*#__PURE__*/React.createElement(Wallet, {
+      size: 20,
+      color: t.textMuted
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, "Pay upfront"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: t.textMuted
+      }
+    }, "₹1,520 one-time"))), /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: () => setStep("done")
+    }, "Confirm & Pay"));
   }
-  return (
-    <ScreenWrap title="" onBack={null}>
-      <div style={{ textAlign: "center", padding: "56px 10px" }}>
-        <div style={{ width: 72, height: 72, borderRadius: 20, background: t.successTint, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-          <CheckCircle2 size={36} color={t.success} />
-        </div>
-        <div style={{ fontSize: 18, fontWeight: 700, color: t.ink, fontFamily: t.fontDisplay }}>You're protected</div>
-        <div style={{ fontSize: 12.5, color: t.textMuted, marginTop: 8 }}>Your policy is active and added to your dashboard.</div>
-        <PrimaryButton onClick={() => { setStep("offer"); go("home"); }} style={{ marginTop: 24 }}>Go to Dashboard</PrimaryButton>
-      </div>
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    title: "",
+    onBack: null
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      padding: "56px 10px"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 72,
+      height: 72,
+      borderRadius: 20,
+      background: t.successTint,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: "0 auto 16px"
+    }
+  }, /*#__PURE__*/React.createElement(CheckCircle2, {
+    size: 36,
+    color: t.success
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 18,
+      fontWeight: 700,
+      color: t.ink,
+      fontFamily: t.fontDisplay
+    }
+  }, "You're protected"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      color: t.textMuted,
+      marginTop: 8
+    }
+  }, "Your policy is active and added to your dashboard."), /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: () => {
+      setStep("offer");
+      go("home");
+    },
+    style: {
+      marginTop: 24
+    }
+  }, "Go to Dashboard")));
 }
-
-function ClaimScreen({ go, step, setStep }) {
+function ClaimScreen({
+  go,
+  step,
+  setStep
+}) {
   const t = useTheme();
   if (step === "start") {
-    return (
-      <ScreenWrap eyebrow="New Claim" title="File a claim" onBack={() => go("home")}>
-        <div style={{ fontSize: 12.5, color: t.textMuted, marginBottom: 14 }}>Select your vehicle and what happened.</div>
-        <Card style={{ marginBottom: 14, display: "flex", alignItems: "center", gap: 10 }} highlight>
-          <Bike size={20} color={t.primary} />
-          <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Honda Activa 6G — WB 24 AB 4521</div>
-        </Card>
-        <div style={{ fontSize: 12.5, fontWeight: 700, color: t.ink, marginBottom: 8 }}>Damage type</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-          {["Accident", "Theft", "Monsoon Damage", "Other"].map((tp) => (
-            <Card key={tp} onClick={() => setStep("inspection")} style={{ textAlign: "center", fontSize: 12, fontWeight: 700, color: t.ink, padding: "14px 6px" }}>{tp}</Card>
-          ))}
-        </div>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "New Claim",
+      title: "File a claim",
+      onBack: () => go("home")
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        color: t.textMuted,
+        marginBottom: 14
+      }
+    }, "Select your vehicle and what happened."), /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 14,
+        display: "flex",
+        alignItems: "center",
+        gap: 10
+      },
+      highlight: true
+    }, /*#__PURE__*/React.createElement(Bike, {
+      size: 20,
+      color: t.primary
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, "Honda Activa 6G — WB 24 AB 4521")), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        fontWeight: 700,
+        color: t.ink,
+        marginBottom: 8
+      }
+    }, "Damage type"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: 10
+      }
+    }, ["Accident", "Theft", "Monsoon Damage", "Other"].map(tp => /*#__PURE__*/React.createElement(Card, {
+      key: tp,
+      onClick: () => setStep("inspection"),
+      style: {
+        textAlign: "center",
+        fontSize: 12,
+        fontWeight: 700,
+        color: t.ink,
+        padding: "14px 6px"
+      }
+    }, tp))));
   }
   if (step === "inspection") {
-    return (
-      <ScreenWrap eyebrow="Step 2" title="Choose inspection type" onBack={() => setStep("start")}>
-        <Card onClick={() => setStep("upload")} style={{ marginBottom: 12, display: "flex", gap: 12, alignItems: "center" }} highlight>
-          <Video size={22} color={t.primary} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Live Video Inspection</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>Fastest — settle in as little as 24 hours</div>
-          </div>
-          <ChevronRight size={16} color={t.textMuted} />
-        </Card>
-        <Card onClick={() => setStep("garage")} style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Calendar size={22} color={t.textSecondary} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Schedule In-Person Visit</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>Surveyor visits at your convenience</div>
-          </div>
-          <ChevronRight size={16} color={t.textMuted} />
-        </Card>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "Step 2",
+      title: "Choose inspection type",
+      onBack: () => setStep("start")
+    }, /*#__PURE__*/React.createElement(Card, {
+      onClick: () => setStep("upload"),
+      style: {
+        marginBottom: 12,
+        display: "flex",
+        gap: 12,
+        alignItems: "center"
+      },
+      highlight: true
+    }, /*#__PURE__*/React.createElement(Video, {
+      size: 22,
+      color: t.primary
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, "Live Video Inspection"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: t.textMuted
+      }
+    }, "Fastest — settle in as little as 24 hours")), /*#__PURE__*/React.createElement(ChevronRight, {
+      size: 16,
+      color: t.textMuted
+    })), /*#__PURE__*/React.createElement(Card, {
+      onClick: () => setStep("garage"),
+      style: {
+        display: "flex",
+        gap: 12,
+        alignItems: "center"
+      }
+    }, /*#__PURE__*/React.createElement(Calendar, {
+      size: 22,
+      color: t.textSecondary
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, "Schedule In-Person Visit"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: t.textMuted
+      }
+    }, "Surveyor visits at your convenience")), /*#__PURE__*/React.createElement(ChevronRight, {
+      size: 16,
+      color: t.textMuted
+    })));
   }
   if (step === "upload") {
-    return (
-      <ScreenWrap eyebrow="Live Video Inspection" title="Show us the damage" onBack={() => setStep("inspection")}>
-        <div style={{ fontSize: 12.5, color: t.textMuted, marginBottom: 14 }}>Start a short video call, or upload photos now.</div>
-        <div style={{ border: `1.5px dashed #D9C4C6`, borderRadius: t.radiusMd, height: 140, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", marginBottom: 16, background: t.card }}>
-          <Camera size={26} color={t.primary} />
-          <div style={{ fontSize: 12, color: t.textMuted, marginTop: 6 }}>Tap to capture or upload</div>
-        </div>
-        <PrimaryButton onClick={() => setStep("estimate")}>Analyze Damage <Sparkles size={15} /></PrimaryButton>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "Live Video Inspection",
+      title: "Show us the damage",
+      onBack: () => setStep("inspection")
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        color: t.textMuted,
+        marginBottom: 14
+      }
+    }, "Start a short video call, or upload photos now."), /*#__PURE__*/React.createElement("div", {
+      style: {
+        border: `1.5px dashed #D9C4C6`,
+        borderRadius: t.radiusMd,
+        height: 140,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 16,
+        background: t.card
+      }
+    }, /*#__PURE__*/React.createElement(Camera, {
+      size: 26,
+      color: t.primary
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12,
+        color: t.textMuted,
+        marginTop: 6
+      }
+    }, "Tap to capture or upload")), /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: () => setStep("estimate")
+    }, "Analyze Damage ", /*#__PURE__*/React.createElement(Sparkles, {
+      size: 15
+    })));
   }
   if (step === "estimate") {
-    return (
-      <ScreenWrap eyebrow="AI Assessment" title="Damage estimate" onBack={() => setStep("upload")}>
-        <Card style={{ marginBottom: 12 }}>
-          <div style={{ fontSize: 11.5, color: t.textMuted }}>Estimated damage</div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: t.ink, marginTop: 2 }}>Minor — front panel scratch</div>
-          <div style={{ fontSize: 13, color: t.primary, fontWeight: 700, marginTop: 4 }}>Est. repair cost: ₹2,400</div>
-        </Card>
-        <Card style={{ marginBottom: 16 }} highlight>
-          <div style={{ fontSize: 12.5, fontWeight: 700, color: "#8a6a1a", marginBottom: 6 }}>Should you claim this?</div>
-          <div style={{ fontSize: 11.5, color: t.textSecondary, lineHeight: 1.55 }}>
-            Filing reduces your No-Claim Bonus (20% → 0%) next year — roughly <b style={{ color: t.ink }}>₹1,850</b> extra in future premiums. Repair cost is ₹2,400.
-          </div>
-          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-            <SecondaryButton onClick={() => setStep("garage")} style={{ fontSize: 12, padding: "10px 0" }}>Pay Myself</SecondaryButton>
-            <PrimaryButton onClick={() => setStep("garage")} style={{ fontSize: 12, padding: "10px 0" }}>File Claim</PrimaryButton>
-          </div>
-        </Card>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "AI Assessment",
+      title: "Damage estimate",
+      onBack: () => setStep("upload")
+    }, /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 12
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11.5,
+        color: t.textMuted
+      }
+    }, "Estimated damage"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 16,
+        fontWeight: 700,
+        color: t.ink,
+        marginTop: 2
+      }
+    }, "Minor — front panel scratch"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        color: t.primary,
+        fontWeight: 700,
+        marginTop: 4
+      }
+    }, "Est. repair cost: ₹2,400")), /*#__PURE__*/React.createElement(Card, {
+      style: {
+        marginBottom: 16
+      },
+      highlight: true
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 12.5,
+        fontWeight: 700,
+        color: "#8a6a1a",
+        marginBottom: 6
+      }
+    }, "Should you claim this?"), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11.5,
+        color: t.textSecondary,
+        lineHeight: 1.55
+      }
+    }, "Filing reduces your No-Claim Bonus (20% → 0%) next year — roughly ", /*#__PURE__*/React.createElement("b", {
+      style: {
+        color: t.ink
+      }
+    }, "₹1,850"), " extra in future premiums. Repair cost is ₹2,400."), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 8,
+        marginTop: 12
+      }
+    }, /*#__PURE__*/React.createElement(SecondaryButton, {
+      onClick: () => setStep("garage"),
+      style: {
+        fontSize: 12,
+        padding: "10px 0"
+      }
+    }, "Pay Myself"), /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: () => setStep("garage"),
+      style: {
+        fontSize: 12,
+        padding: "10px 0"
+      }
+    }, "File Claim"))));
   }
   if (step === "garage") {
-    return (
-      <ScreenWrap eyebrow="Step 4" title="Nearest garages" onBack={() => setStep("estimate")}>
-        <div style={{ height: 130, borderRadius: t.radiusMd, background: "#EFEAE8", marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <MapPin size={28} color={t.textMuted} />
-        </div>
-        {[{ name: "Salt Lake Two-Wheeler Care", dist: "1.2 km" }, { name: "EM Bypass Motors", dist: "2.8 km" }].map((g) => (
-          <Card key={g.name} style={{ marginBottom: 10, display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>{g.name}</div>
-              <div style={{ fontSize: 11, color: t.textMuted, marginTop: 2 }}>{g.dist} away · Cashless</div>
-            </div>
-            <ChevronRight size={16} color={t.textMuted} />
-          </Card>
-        ))}
-        <PrimaryButton onClick={() => setStep("tracker")} style={{ marginTop: 6 }}>Confirm Garage</PrimaryButton>
-      </ScreenWrap>
-    );
+    return /*#__PURE__*/React.createElement(ScreenWrap, {
+      eyebrow: "Step 4",
+      title: "Nearest garages",
+      onBack: () => setStep("estimate")
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        height: 130,
+        borderRadius: t.radiusMd,
+        background: "#EFEAE8",
+        marginBottom: 12,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }
+    }, /*#__PURE__*/React.createElement(MapPin, {
+      size: 28,
+      color: t.textMuted
+    })), [{
+      name: "Salt Lake Two-Wheeler Care",
+      dist: "1.2 km"
+    }, {
+      name: "EM Bypass Motors",
+      dist: "2.8 km"
+    }].map(g => /*#__PURE__*/React.createElement(Card, {
+      key: g.name,
+      style: {
+        marginBottom: 10,
+        display: "flex",
+        alignItems: "center",
+        gap: 10
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: 1
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13,
+        fontWeight: 700,
+        color: t.ink
+      }
+    }, g.name), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 11,
+        color: t.textMuted,
+        marginTop: 2
+      }
+    }, g.dist, " away · Cashless")), /*#__PURE__*/React.createElement(ChevronRight, {
+      size: 16,
+      color: t.textMuted
+    }))), /*#__PURE__*/React.createElement(PrimaryButton, {
+      onClick: () => setStep("tracker"),
+      style: {
+        marginTop: 6
+      }
+    }, "Confirm Garage"));
   }
-  return (
-    <ScreenWrap eyebrow="Claim #RG-2026-4471" title="Claim status" onBack={() => go("home")}>
-      {[
-        { label: "Filed", done: true },
-        { label: "Under review", done: true },
-        { label: "Approved", done: true },
-        { label: "Repair in progress", done: false, active: true },
-        { label: "Settled", done: false },
-      ].map((s, i, arr) => (
-        <div key={s.label} style={{ display: "flex", gap: 12 }}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ width: 13, height: 13, borderRadius: 7, background: s.done ? t.success : s.active ? t.primary : "#ddd", flexShrink: 0 }} />
-            {i < arr.length - 1 && <div style={{ width: 2, flex: 1, background: s.done ? t.success : "#ddd", minHeight: 24 }} />}
-          </div>
-          <div style={{ paddingBottom: 20 }}>
-            <div style={{ fontSize: 13, fontWeight: s.active ? 700 : 600, color: s.active ? t.primary : t.ink }}>{s.label}</div>
-            {s.active && <div style={{ fontSize: 11, color: t.textMuted }}>Est. completion in 2 days</div>}
-          </div>
-        </div>
-      ))}
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Claim #RG-2026-4471",
+    title: "Claim status",
+    onBack: () => go("home")
+  }, [{
+    label: "Filed",
+    done: true
+  }, {
+    label: "Under review",
+    done: true
+  }, {
+    label: "Approved",
+    done: true
+  }, {
+    label: "Repair in progress",
+    done: false,
+    active: true
+  }, {
+    label: "Settled",
+    done: false
+  }].map((s, i, arr) => /*#__PURE__*/React.createElement("div", {
+    key: s.label,
+    style: {
+      display: "flex",
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 13,
+      height: 13,
+      borderRadius: 7,
+      background: s.done ? t.success : s.active ? t.primary : "#ddd",
+      flexShrink: 0
+    }
+  }), i < arr.length - 1 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 2,
+      flex: 1,
+      background: s.done ? t.success : "#ddd",
+      minHeight: 24
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      paddingBottom: 20
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: s.active ? 700 : 600,
+      color: s.active ? t.primary : t.ink
+    }
+  }, s.label), s.active && /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.textMuted
+    }
+  }, "Est. completion in 2 days")))));
 }
-
-function RenewalScreen({ go }) {
+function RenewalScreen({
+  go
+}) {
   const t = useTheme();
   const [autoDebit, setAutoDebit] = useState(true);
-  return (
-    <ScreenWrap eyebrow="Due in 10 months" title="Renew policy" onBack={() => go("home")}>
-      <Card style={{ marginBottom: 12 }}>
-        <Row label="Current premium" value="₹1,340" />
-        <Row label="Renewal premium" value="₹1,290" muted />
-        <div style={{ fontSize: 11, color: t.success, fontWeight: 700, marginTop: 4 }}>You save ₹50 with your claims-free record</div>
-      </Card>
-      <Card style={{ marginBottom: 14 }}>
-        <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-          <AlertTriangle size={16} color={t.gold} style={{ flexShrink: 0, marginTop: 1 }} />
-          <div style={{ fontSize: 11.5, color: t.textSecondary }}>Coverage gap detected: not covered for E20 fuel damage. Add for ₹180/yr?</div>
-        </div>
-      </Card>
-      <Card style={{ marginBottom: 18, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>Auto-debit renewal</div>
-          <div style={{ fontSize: 11, color: t.textMuted }}>Never miss a renewal again</div>
-        </div>
-        <div onClick={() => setAutoDebit(!autoDebit)} style={{ width: 42, height: 24, borderRadius: 12, background: autoDebit ? t.primary : "#ddd", position: "relative", cursor: "pointer", flexShrink: 0 }}>
-          <div style={{ width: 18, height: 18, borderRadius: 9, background: "#fff", position: "absolute", top: 3, left: autoDebit ? 21 : 3, transition: "left 0.2s" }} />
-        </div>
-      </Card>
-      <PrimaryButton onClick={() => go("home")}>Confirm Renewal <ChevronRight size={16} /></PrimaryButton>
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Due in 10 months",
+    title: "Renew policy",
+    onBack: () => go("home")
+  }, /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement(Row, {
+    label: "Current premium",
+    value: "₹1,340"
+  }), /*#__PURE__*/React.createElement(Row, {
+    label: "Renewal premium",
+    value: "₹1,290",
+    muted: true
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.success,
+      fontWeight: 700,
+      marginTop: 4
+    }
+  }, "You save ₹50 with your claims-free record")), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 10,
+      alignItems: "flex-start"
+    }
+  }, /*#__PURE__*/React.createElement(AlertTriangle, {
+    size: 16,
+    color: t.gold,
+    style: {
+      flexShrink: 0,
+      marginTop: 1
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: t.textSecondary
+    }
+  }, "Coverage gap detected: not covered for E20 fuel damage. Add for ₹180/yr?"))), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 18,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, "Auto-debit renewal"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.textMuted
+    }
+  }, "Never miss a renewal again")), /*#__PURE__*/React.createElement("div", {
+    onClick: () => setAutoDebit(!autoDebit),
+    style: {
+      width: 42,
+      height: 24,
+      borderRadius: 12,
+      background: autoDebit ? t.primary : "#ddd",
+      position: "relative",
+      cursor: "pointer",
+      flexShrink: 0
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 18,
+      height: 18,
+      borderRadius: 9,
+      background: "#fff",
+      position: "absolute",
+      top: 3,
+      left: autoDebit ? 21 : 3,
+      transition: "left 0.2s"
+    }
+  }))), /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: () => go("home")
+  }, "Confirm Renewal ", /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 16
+  })));
 }
-
-function TripShieldScreen({ go }) {
+function TripShieldScreen({
+  go
+}) {
   const t = useTheme();
   const [duration, setDuration] = useState(48);
-  const priceMap = { 24: 49, 48: 89, 72: 119 };
-  return (
-    <ScreenWrap eyebrow="Signature Feature" title="TripShield" onBack={() => go("home")}>
-      <div style={{ textAlign: "center", marginBottom: 18 }}>
-        <div style={{ width: 56, height: 56, borderRadius: 16, background: t.primaryTint, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
-          <Zap size={24} color={t.primary} />
-        </div>
-        <div style={{ fontSize: 12, color: t.textMuted, padding: "0 14px" }}>Temporary coverage boost on top of your base policy. Auto-reverts when it ends.</div>
-      </div>
-      <div style={{ fontSize: 11.5, fontWeight: 700, color: t.textMuted, marginBottom: 8 }}>Duration</div>
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        {[24, 48, 72].map((d) => (
-          <button key={d} onClick={() => setDuration(d)} style={{
-            flex: 1, padding: "11px 0", borderRadius: t.radiusSm,
-            border: duration === d ? `1.5px solid ${t.primary}` : `1px solid ${t.border}`,
-            background: duration === d ? t.primaryTint : "#fff",
-            color: duration === d ? t.primary : t.ink, fontWeight: 700, fontSize: 13, cursor: "pointer"
-          }}>{d}h</button>
-        ))}
-      </div>
-      <Card style={{ marginBottom: 12 }}>
-        <div style={{ fontSize: 12.5, fontWeight: 700, color: t.ink, marginBottom: 8 }}>Included in this boost</div>
-        {["Elevated own-damage limit", "Roadside assistance activated", "Emergency alternate transport"].map((f) => (
-          <div key={f} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
-            <CheckCircle2 size={14} color={t.success} />
-            <span style={{ fontSize: 12, color: t.textSecondary }}>{f}</span>
-          </div>
-        ))}
-      </Card>
-      <Card style={{ marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }} highlight>
-        <span style={{ fontSize: 13, color: t.textMuted }}>Total cost</span>
-        <span style={{ fontSize: 18, fontWeight: 700, color: t.primary }}>₹{priceMap[duration]}</span>
-      </Card>
-      <PrimaryButton onClick={() => go("home")}>Activate TripShield <Zap size={15} /></PrimaryButton>
-    </ScreenWrap>
-  );
+  const priceMap = {
+    24: 49,
+    48: 89,
+    72: 119
+  };
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Signature Feature",
+    title: "TripShield",
+    onBack: () => go("home")
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      marginBottom: 18
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 56,
+      height: 56,
+      borderRadius: 16,
+      background: t.primaryTint,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: "0 auto 12px"
+    }
+  }, /*#__PURE__*/React.createElement(Zap, {
+    size: 24,
+    color: t.primary
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: t.textMuted,
+      padding: "0 14px"
+    }
+  }, "Temporary coverage boost on top of your base policy. Auto-reverts when it ends.")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      fontWeight: 700,
+      color: t.textMuted,
+      marginBottom: 8
+    }
+  }, "Duration"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      marginBottom: 16
+    }
+  }, [24, 48, 72].map(d => /*#__PURE__*/React.createElement("button", {
+    key: d,
+    onClick: () => setDuration(d),
+    style: {
+      flex: 1,
+      padding: "11px 0",
+      borderRadius: t.radiusSm,
+      border: duration === d ? `1.5px solid ${t.primary}` : `1px solid ${t.border}`,
+      background: duration === d ? t.primaryTint : "#fff",
+      color: duration === d ? t.primary : t.ink,
+      fontWeight: 700,
+      fontSize: 13,
+      cursor: "pointer"
+    }
+  }, d, "h"))), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 700,
+      color: t.ink,
+      marginBottom: 8
+    }
+  }, "Included in this boost"), ["Elevated own-damage limit", "Roadside assistance activated", "Emergency alternate transport"].map(f => /*#__PURE__*/React.createElement("div", {
+    key: f,
+    style: {
+      display: "flex",
+      gap: 8,
+      alignItems: "center",
+      marginBottom: 6
+    }
+  }, /*#__PURE__*/React.createElement(CheckCircle2, {
+    size: 14,
+    color: t.success
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      color: t.textSecondary
+    }
+  }, f)))), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 18,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center"
+    },
+    highlight: true
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 13,
+      color: t.textMuted
+    }
+  }, "Total cost"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 18,
+      fontWeight: 700,
+      color: t.primary
+    }
+  }, "₹", priceMap[duration])), /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: () => go("home")
+  }, "Activate TripShield ", /*#__PURE__*/React.createElement(Zap, {
+    size: 15
+  })));
 }
-
-function LocatorScreen({ go }) {
+function LocatorScreen({
+  go
+}) {
   const t = useTheme();
   const [tab, setTab] = useState("garage");
   const data = {
-    garage: [{ name: "Salt Lake Two-Wheeler Care", dist: "1.2 km" }, { name: "EM Bypass Motors", dist: "2.8 km" }, { name: "VIP Road Auto Works", dist: "4.1 km" }],
-    hospital: [{ name: "Apollo Gleneagles", dist: "3.4 km" }, { name: "AMRI Salt Lake", dist: "2.1 km" }],
-    branch: [{ name: "IndusInd Bank — Sector V", dist: "1.8 km" }],
+    garage: [{
+      name: "Salt Lake Two-Wheeler Care",
+      dist: "1.2 km"
+    }, {
+      name: "EM Bypass Motors",
+      dist: "2.8 km"
+    }, {
+      name: "VIP Road Auto Works",
+      dist: "4.1 km"
+    }],
+    hospital: [{
+      name: "Apollo Gleneagles",
+      dist: "3.4 km"
+    }, {
+      name: "AMRI Salt Lake",
+      dist: "2.1 km"
+    }],
+    branch: [{
+      name: "IndusInd Bank — Sector V",
+      dist: "1.8 km"
+    }]
   };
-  return (
-    <ScreenWrap eyebrow="Cashless Network" title="Quick Locator" onBack={() => go("home")}>
-      <div style={{ display: "flex", gap: 8, marginBottom: 14 }}>
-        {[{ id: "garage", label: "Garages" }, { id: "hospital", label: "Hospitals" }, { id: "branch", label: "Branches" }].map((tb) => (
-          <button key={tb.id} onClick={() => setTab(tb.id)} style={{
-            flex: 1, padding: "9px 0", borderRadius: 20, fontSize: 11.5, fontWeight: 700, cursor: "pointer",
-            border: tab === tb.id ? "none" : `1px solid ${t.border}`,
-            background: tab === tb.id ? t.primary : "#fff", color: tab === tb.id ? "#fff" : t.textSecondary
-          }}>{tb.label}</button>
-        ))}
-      </div>
-      <div style={{ height: 130, borderRadius: t.radiusMd, background: "#EFEAE8", marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <MapPin size={28} color={t.textMuted} />
-      </div>
-      {data[tab].map((g) => (
-        <Card key={g.name} style={{ marginBottom: 10, display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>{g.name}</div>
-            <div style={{ fontSize: 11, color: t.textMuted, marginTop: 2 }}>{g.dist} away · Cashless</div>
-          </div>
-          <ChevronRight size={16} color={t.textMuted} />
-        </Card>
-      ))}
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Cashless Network",
+    title: "Quick Locator",
+    onBack: () => go("home")
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      gap: 8,
+      marginBottom: 14
+    }
+  }, [{
+    id: "garage",
+    label: "Garages"
+  }, {
+    id: "hospital",
+    label: "Hospitals"
+  }, {
+    id: "branch",
+    label: "Branches"
+  }].map(tb => /*#__PURE__*/React.createElement("button", {
+    key: tb.id,
+    onClick: () => setTab(tb.id),
+    style: {
+      flex: 1,
+      padding: "9px 0",
+      borderRadius: 20,
+      fontSize: 11.5,
+      fontWeight: 700,
+      cursor: "pointer",
+      border: tab === tb.id ? "none" : `1px solid ${t.border}`,
+      background: tab === tb.id ? t.primary : "#fff",
+      color: tab === tb.id ? "#fff" : t.textSecondary
+    }
+  }, tb.label))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      height: 130,
+      borderRadius: t.radiusMd,
+      background: "#EFEAE8",
+      marginBottom: 12,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
+  }, /*#__PURE__*/React.createElement(MapPin, {
+    size: 28,
+    color: t.textMuted
+  })), data[tab].map(g => /*#__PURE__*/React.createElement(Card, {
+    key: g.name,
+    style: {
+      marginBottom: 10,
+      display: "flex",
+      alignItems: "center",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, g.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.textMuted,
+      marginTop: 2
+    }
+  }, g.dist, " away · Cashless")), /*#__PURE__*/React.createElement(ChevronRight, {
+    size: 16,
+    color: t.textMuted
+  }))));
 }
-
-function VaultScreen({ go }) {
+function VaultScreen({
+  go
+}) {
   const t = useTheme();
-  const docs = [
-    { name: "Policy Document — 2026", size: "1.2 MB" },
-    { name: "80D Tax Certificate", size: "180 KB" },
-    { name: "Health Card", size: "240 KB" },
-    { name: "Previous Claim Settlement", size: "640 KB" },
-  ];
-  return (
-    <ScreenWrap eyebrow="Secure Storage" title="E-Doc Vault" onBack={() => go("home")}>
-      <div style={{ fontSize: 12, color: t.textMuted, marginBottom: 14 }}>All your policy documents, safely stored and always accessible.</div>
-      {docs.map((d) => (
-        <Card key={d.name} style={{ marginBottom: 10, display: "flex", alignItems: "center", gap: 10 }}>
-          <FolderLock size={18} color={t.primary} />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: t.ink }}>{d.name}</div>
-            <div style={{ fontSize: 11, color: t.textMuted }}>{d.size}</div>
-          </div>
-          <ChevronDown size={16} color={t.textMuted} style={{ transform: "rotate(-90deg)" }} />
-        </Card>
-      ))}
-    </ScreenWrap>
-  );
+  const docs = [{
+    name: "Policy Document — 2026",
+    size: "1.2 MB"
+  }, {
+    name: "80D Tax Certificate",
+    size: "180 KB"
+  }, {
+    name: "Health Card",
+    size: "240 KB"
+  }, {
+    name: "Previous Claim Settlement",
+    size: "640 KB"
+  }];
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Secure Storage",
+    title: "E-Doc Vault",
+    onBack: () => go("home")
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: t.textMuted,
+      marginBottom: 14
+    }
+  }, "All your policy documents, safely stored and always accessible."), docs.map(d => /*#__PURE__*/React.createElement(Card, {
+    key: d.name,
+    style: {
+      marginBottom: 10,
+      display: "flex",
+      alignItems: "center",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement(FolderLock, {
+    size: 18,
+    color: t.primary
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, d.name), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: t.textMuted
+    }
+  }, d.size)), /*#__PURE__*/React.createElement(ChevronDown, {
+    size: 16,
+    color: t.textMuted,
+    style: {
+      transform: "rotate(-90deg)"
+    }
+  }))));
 }
-
-function RewardsScreen({ go }) {
+function RewardsScreen({
+  go
+}) {
   const t = useTheme();
-  return (
-    <ScreenWrap eyebrow="Safe Rider Rewards" title="Your points" onBack={() => go("home")}>
-      <Card style={{ marginBottom: 14, background: `linear-gradient(135deg, ${t.gold} 0%, #a3791f 100%)`, border: "none", textAlign: "center", padding: 20 }}>
-        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.85)", textTransform: "uppercase", letterSpacing: 1 }}>Total Points</div>
-        <div style={{ fontSize: 32, fontWeight: 700, color: "#fff", fontFamily: t.fontDisplay }}>420</div>
-        <div style={{ fontSize: 11.5, color: "rgba(255,255,255,0.85)", marginTop: 2 }}>= ₹210 off your next renewal</div>
-      </Card>
-      <div style={{ fontSize: 12.5, fontWeight: 700, color: t.ink, marginBottom: 10 }}>Earn more points</div>
-      {[
-        { t: "Complete a claims-free year", pts: "+150" },
-        { t: "Add E20 compatibility cover", pts: "+50" },
-        { t: "Refer a friend to RideGuard", pts: "+100" },
-      ].map((r) => (
-        <Card key={r.t} style={{ marginBottom: 10, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: 12.5, color: t.ink, fontWeight: 600 }}>{r.t}</span>
-          <Pill tone="gold">{r.pts}</Pill>
-        </Card>
-      ))}
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Safe Rider Rewards",
+    title: "Your points",
+    onBack: () => go("home")
+  }, /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 14,
+      background: `linear-gradient(135deg, ${t.gold} 0%, #a3791f 100%)`,
+      border: "none",
+      textAlign: "center",
+      padding: 20
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11,
+      color: "rgba(255,255,255,0.85)",
+      textTransform: "uppercase",
+      letterSpacing: 1
+    }
+  }, "Total Points"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 32,
+      fontWeight: 700,
+      color: "#fff",
+      fontFamily: t.fontDisplay
+    }
+  }, "420"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: "rgba(255,255,255,0.85)",
+      marginTop: 2
+    }
+  }, "= ₹210 off your next renewal")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12.5,
+      fontWeight: 700,
+      color: t.ink,
+      marginBottom: 10
+    }
+  }, "Earn more points"), [{
+    t: "Complete a claims-free year",
+    pts: "+150"
+  }, {
+    t: "Add E20 compatibility cover",
+    pts: "+50"
+  }, {
+    t: "Refer a friend to RideGuard",
+    pts: "+100"
+  }].map(r => /*#__PURE__*/React.createElement(Card, {
+    key: r.t,
+    style: {
+      marginBottom: 10,
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center"
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12.5,
+      color: t.ink,
+      fontWeight: 600
+    }
+  }, r.t), /*#__PURE__*/React.createElement(Pill, {
+    tone: "gold"
+  }, r.pts))));
 }
-
-function E20Screen({ go }) {
+function E20Screen({
+  go
+}) {
   const t = useTheme();
-  return (
-    <ScreenWrap eyebrow="Fuel Compatibility" title="E20 fuel check" onBack={() => go("home")}>
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <div style={{ width: 56, height: 56, borderRadius: 16, background: t.goldTint, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 12px" }}>
-          <AlertTriangle size={24} color={t.gold} />
-        </div>
-        <div style={{ fontSize: 15, fontWeight: 700, color: t.ink, fontFamily: t.fontDisplay }}>Your Activa 6G isn't E20-rated</div>
-      </div>
-      <Card style={{ marginBottom: 14 }}>
-        <div style={{ fontSize: 12, color: t.textSecondary, lineHeight: 1.6 }}>
-          Most pumps now sell 20% ethanol-blended petrol. Older engines like yours weren't designed for it — this can corrode fuel lines and degrade seals, sometimes causing damage standard policies don't cover.
-        </div>
-      </Card>
-      <Card style={{ marginBottom: 18 }} highlight>
-        <Pill tone="gold">Add-on Available</Pill>
-        <div style={{ fontSize: 14, fontWeight: 700, color: t.ink, marginTop: 8 }}>E20 Fuel Compatibility Cover</div>
-        <div style={{ fontSize: 11.5, color: t.textMuted, marginTop: 4 }}>Covers fuel-system damage from ethanol-blended fuel.</div>
-        <div style={{ fontSize: 17, fontWeight: 700, color: t.primary, marginTop: 8 }}>₹180/year</div>
-      </Card>
-      <PrimaryButton onClick={() => go("home")}>Add to My Policy</PrimaryButton>
-      <SecondaryButton onClick={() => go("home")} style={{ marginTop: 10 }}>Maybe Later</SecondaryButton>
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Fuel Compatibility",
+    title: "E20 fuel check",
+    onBack: () => go("home")
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 56,
+      height: 56,
+      borderRadius: 16,
+      background: t.goldTint,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      margin: "0 auto 12px"
+    }
+  }, /*#__PURE__*/React.createElement(AlertTriangle, {
+    size: 24,
+    color: t.gold
+  })), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: t.ink,
+      fontFamily: t.fontDisplay
+    }
+  }, "Your Activa 6G isn't E20-rated")), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 14
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: t.textSecondary,
+      lineHeight: 1.6
+    }
+  }, "Most pumps now sell 20% ethanol-blended petrol. Older engines like yours weren't designed for it — this can corrode fuel lines and degrade seals, sometimes causing damage standard policies don't cover.")), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 18
+    },
+    highlight: true
+  }, /*#__PURE__*/React.createElement(Pill, {
+    tone: "gold"
+  }, "Add-on Available"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 14,
+      fontWeight: 700,
+      color: t.ink,
+      marginTop: 8
+    }
+  }, "E20 Fuel Compatibility Cover"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: t.textMuted,
+      marginTop: 4
+    }
+  }, "Covers fuel-system damage from ethanol-blended fuel."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 17,
+      fontWeight: 700,
+      color: t.primary,
+      marginTop: 8
+    }
+  }, "₹180/year")), /*#__PURE__*/React.createElement(PrimaryButton, {
+    onClick: () => go("home")
+  }, "Add to My Policy"), /*#__PURE__*/React.createElement(SecondaryButton, {
+    onClick: () => go("home"),
+    style: {
+      marginTop: 10
+    }
+  }, "Maybe Later"));
 }
-
 function ProfileScreen() {
   const t = useTheme();
-  return (
-    <ScreenWrap eyebrow="Account" title="Profile" onBack={null}>
-      <div style={{ textAlign: "center", marginBottom: 16 }}>
-        <div style={{ width: 64, height: 64, borderRadius: 32, background: t.gold, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, color: "#fff", fontSize: 20, margin: "0 auto 10px" }}>DR</div>
-        <div style={{ fontSize: 15, fontWeight: 700, color: t.ink }}>Debarghya Roy</div>
-        <div style={{ fontSize: 11.5, color: t.textMuted }}>Kolkata, West Bengal</div>
-      </div>
-      <Card style={{ marginBottom: 10 }}><Row label="IndusInd A/C" value="•••• 4821" /></Card>
-      <Card style={{ marginBottom: 10 }}><Row label="Vehicle loan" value="26 months left" /></Card>
-      <Card style={{ display: "flex", alignItems: "center", gap: 10 }}>
-        <Phone size={16} color={t.primary} />
-        <span style={{ fontSize: 12.5, color: t.ink, fontWeight: 600 }}>+91 98•••••521 · OTP Login</span>
-      </Card>
-    </ScreenWrap>
-  );
+  return /*#__PURE__*/React.createElement(ScreenWrap, {
+    eyebrow: "Account",
+    title: "Profile",
+    onBack: null
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: "center",
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 64,
+      height: 64,
+      borderRadius: 32,
+      background: t.gold,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: 700,
+      color: "#fff",
+      fontSize: 20,
+      margin: "0 auto 10px"
+    }
+  }, "DR"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 15,
+      fontWeight: 700,
+      color: t.ink
+    }
+  }, "Debarghya Roy"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 11.5,
+      color: t.textMuted
+    }
+  }, "Kolkata, West Bengal")), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 10
+    }
+  }, /*#__PURE__*/React.createElement(Row, {
+    label: "IndusInd A/C",
+    value: "•••• 4821"
+  })), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      marginBottom: 10
+    }
+  }, /*#__PURE__*/React.createElement(Row, {
+    label: "Vehicle loan",
+    value: "26 months left"
+  })), /*#__PURE__*/React.createElement(Card, {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10
+    }
+  }, /*#__PURE__*/React.createElement(Phone, {
+    size: 16,
+    color: t.primary
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12.5,
+      color: t.ink,
+      fontWeight: 600
+    }
+  }, "+91 98•••••521 · OTP Login")));
 }
-
 function RideGuardPrototype() {
   const [screen, setScreen] = useState("home");
   const [issuanceStep, setIssuanceStep] = useState("offer");
   const [claimStep, setClaimStep] = useState("start");
-
-  const go = (target) => {
-    if (target === "claim-start") { setClaimStep("start"); setScreen("claim"); return; }
-    if (target === "instant-issuance") { setIssuanceStep("offer"); setScreen("instant-issuance"); return; }
+  const go = target => {
+    if (target === "claim-start") {
+      setClaimStep("start");
+      setScreen("claim");
+      return;
+    }
+    if (target === "instant-issuance") {
+      setIssuanceStep("offer");
+      setScreen("instant-issuance");
+      return;
+    }
     setScreen(target);
   };
-
   let content;
   let navActive = "home";
   switch (screen) {
-    case "home": content = <HomeScreen go={go} />; break;
-    case "instant-issuance": content = <InstantIssuanceScreen go={go} step={issuanceStep} setStep={setIssuanceStep} />; break;
-    case "claim": content = <ClaimScreen go={go} step={claimStep} setStep={setClaimStep} />; navActive = "claims"; break;
-    case "renewal": content = <RenewalScreen go={go} />; break;
-    case "tripshield": content = <TripShieldScreen go={go} />; break;
-    case "locator": content = <LocatorScreen go={go} />; navActive = "locator"; break;
-    case "vault": content = <VaultScreen go={go} />; navActive = "vault"; break;
-    case "rewards": content = <RewardsScreen go={go} />; break;
-    case "e20": content = <E20Screen go={go} />; break;
-    case "profile": content = <ProfileScreen />; navActive = "profile"; break;
-    default: content = <HomeScreen go={go} />;
+    case "home":
+      content = /*#__PURE__*/React.createElement(HomeScreen, {
+        go: go
+      });
+      break;
+    case "instant-issuance":
+      content = /*#__PURE__*/React.createElement(InstantIssuanceScreen, {
+        go: go,
+        step: issuanceStep,
+        setStep: setIssuanceStep
+      });
+      break;
+    case "claim":
+      content = /*#__PURE__*/React.createElement(ClaimScreen, {
+        go: go,
+        step: claimStep,
+        setStep: setClaimStep
+      });
+      navActive = "claims";
+      break;
+    case "renewal":
+      content = /*#__PURE__*/React.createElement(RenewalScreen, {
+        go: go
+      });
+      break;
+    case "tripshield":
+      content = /*#__PURE__*/React.createElement(TripShieldScreen, {
+        go: go
+      });
+      break;
+    case "locator":
+      content = /*#__PURE__*/React.createElement(LocatorScreen, {
+        go: go
+      });
+      navActive = "locator";
+      break;
+    case "vault":
+      content = /*#__PURE__*/React.createElement(VaultScreen, {
+        go: go
+      });
+      navActive = "vault";
+      break;
+    case "rewards":
+      content = /*#__PURE__*/React.createElement(RewardsScreen, {
+        go: go
+      });
+      break;
+    case "e20":
+      content = /*#__PURE__*/React.createElement(E20Screen, {
+        go: go
+      });
+      break;
+    case "profile":
+      content = /*#__PURE__*/React.createElement(ProfileScreen, null);
+      navActive = "profile";
+      break;
+    default:
+      content = /*#__PURE__*/React.createElement(HomeScreen, {
+        go: go
+      });
   }
-
-  const showNav = ["home", "locator", "vault", "profile"].includes(screen) || (screen === "claim" && claimStep === "tracker");
-
-  return (
-    <ThemeCtx.Provider value={theme}>
-      <div style={{ width: "100%", height: "100%", fontFamily: theme.fontBody }}>
-        <PhoneFrame>
-          <StatusBar />
-          {content}
-          {showNav && <BottomNav active={navActive} go={go} />}
-        </PhoneFrame>
-      </div>
-    </ThemeCtx.Provider>
-  );
+  const showNav = ["home", "locator", "vault", "profile"].includes(screen) || screen === "claim" && claimStep === "tracker";
+  return /*#__PURE__*/React.createElement(ThemeCtx.Provider, {
+    value: theme
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "100%",
+      height: "100%",
+      fontFamily: theme.fontBody
+    }
+  }, /*#__PURE__*/React.createElement(PhoneFrame, null, /*#__PURE__*/React.createElement(StatusBar, null), content, showNav && /*#__PURE__*/React.createElement(BottomNav, {
+    active: navActive,
+    go: go
+  }))));
 }
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RideGuardPrototype />);
-</script>
-
-<script>
-  // Manually transform the JSX source above with the CLASSIC runtime
-  // (Babel's default automatic script-tag transform emits an ES "import"
-  // statement, which fails in a plain, non-module <script> tag).
-  var source = document.getElementById("app-source").textContent;
-  var compiled = Babel.transform(source, {
-    presets: [["react", { runtime: "classic" }]],
-  }).code;
-  (0, eval)(compiled);
+root.render(/*#__PURE__*/React.createElement(RideGuardPrototype, null));
 </script>
 </body>
 </html>
