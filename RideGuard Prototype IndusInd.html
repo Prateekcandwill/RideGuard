@@ -19,7 +19,23 @@
 </style>
 </head>
 <body>
-<div id="root"></div>
+<div id="root">
+  <div style="font-family: -apple-system, sans-serif; padding: 40px 20px; text-align: center; color: #6B6560;">
+    Loading RideGuard…
+  </div>
+</div>
+<div id="boot-error" style="display:none; font-family: -apple-system, sans-serif; max-width: 640px; margin: 40px auto; padding: 20px; background:#FBEAEA; border:1px solid #C0392B; border-radius:10px; color:#7A0F20; white-space: pre-wrap; font-size: 13px;"></div>
+
+<script>
+  window.addEventListener("error", function (e) {
+    var box = document.getElementById("boot-error");
+    if (!box) return;
+    box.style.display = "block";
+    box.textContent = "RideGuard failed to load.\n\n" +
+      (e.message || "Unknown error") +
+      (e.filename ? ("\nFile: " + e.filename + ":" + e.lineno + ":" + e.colno) : "");
+  });
+</script>
 
 <script>
 const {
